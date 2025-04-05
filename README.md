@@ -54,33 +54,77 @@ npm start
 
 ## API Endpoints
 
-### Authentication
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Login user
+# 🛒 E-commerce API
 
-### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/:id` - Get single product
-- `POST /api/products` - Create new product (Admin only)
-- `PUT /api/products/:id` - Update product (Admin only)
-- `DELETE /api/products/:id` - Delete product (Admin only)
+## Authentication
+- `POST /api/v1/auth/register` - Register a new user
+- `POST /api/v1/auth/login` - Login user
 
-### Categories
-- `GET /api/categories` - Get all categories
-- `POST /api/categories` - Create new category (Admin only)
-- `PUT /api/categories/:id` - Update category (Admin only)
-- `DELETE /api/categories/:id` - Delete category (Admin only)
+## Users
+- `GET /api/v1/users` - Get all users (Admin only)
+- `GET /api/v1/users/:id` - Get single user (Admin or same user)
+- `PUT /api/v1/users/:id` - Update user (Admin or same user)
+- `DELETE /api/v1/users/:id` - Delete user (Admin only)
 
-### Cart
-- `GET /api/cart` - Get user's cart
-- `POST /api/cart` - Add item to cart
-- `PUT /api/cart/:itemId` - Update cart item
-- `DELETE /api/cart/:itemId` - Remove item from cart
+## Products
+- `GET /api/v1/products` - Get all products
+- `GET /api/v1/products/:id` - Get single product
+- `POST /api/v1/products` - Create new product (Admin only)
+- `PUT /api/v1/products/:id` - Update product (Admin only)
+- `DELETE /api/v1/products/:id` - Delete product (Admin only)
 
-### Orders
-- `GET /api/orders` - Get user's orders
-- `POST /api/orders` - Create new order
-- `GET /api/orders/:id` - Get order details
+## Categories
+- `GET /api/v1/categories` - Get all categories
+- `POST /api/v1/categories` - Create new category (Admin only)
+- `PUT /api/v1/categories/:id` - Update category (Admin only)
+- `DELETE /api/v1/categories/:id` - Delete category (Admin only)
+
+## Subcategories
+- `GET /api/v1/subcategories` - Get all subcategories
+- `POST /api/v1/subcategories` - Create subcategory (Admin only)
+- `PUT /api/v1/subcategories/:id` - Update subcategory (Admin only)
+- `DELETE /api/v1/subcategories/:id` - Delete subcategory (Admin only)
+
+## Brands
+- `GET /api/v1/brands` - Get all brands
+- `POST /api/v1/brands` - Create brand (Admin only)
+- `PUT /api/v1/brands/:id` - Update brand (Admin only)
+- `DELETE /api/v1/brands/:id` - Delete brand (Admin only)
+
+## Reviews
+- `GET /api/v1/reviews` - Get all reviews
+- `POST /api/v1/reviews` - Create a review (Auth only)
+- `PUT /api/v1/reviews/:id` - Update review (Owner only)
+- `DELETE /api/v1/reviews/:id` - Delete review (Owner/Admin)
+
+## Wishlist
+- `GET /api/v1/wishlist` - Get user's wishlist
+- `POST /api/v1/wishlist` - Add product to wishlist
+- `DELETE /api/v1/wishlist/:productId` - Remove product from wishlist
+
+## Addresses
+- `GET /api/v1/addresses` - Get user addresses
+- `POST /api/v1/addresses` - Add new address
+- `PUT /api/v1/addresses/:id` - Update address
+- `DELETE /api/v1/addresses/:id` - Delete address
+
+## Coupons
+- `GET /api/v1/coupons` - Get all coupons
+- `POST /api/v1/coupons` - Create a coupon (Admin only)
+- `PUT /api/v1/coupons/:id` - Update a coupon (Admin only)
+- `DELETE /api/v1/coupons/:id` - Delete a coupon (Admin only)
+
+## Cart
+- `GET /api/v1/cart` - Get user's cart
+- `POST /api/v1/cart` - Add item to cart
+- `PUT /api/v1/cart/:itemId` - Update cart item
+- `DELETE /api/v1/cart/:itemId` - Remove item from cart
+
+## Orders
+- `GET /api/v1/orders` - Get user's orders
+- `POST /api/v1/orders` - Create new order
+- `GET /api/v1/orders/:id` - Get order details
+
 
 ## Error Handling
 

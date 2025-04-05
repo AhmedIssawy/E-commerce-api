@@ -8,23 +8,33 @@ exports.protectMiddlware = asyncHandler(async (req, res, next) => {
   if (!token)
     return next(
       new apiError(
-        "you are not login,please Login to Get Access this route",
+        "You are not logged in. Please log in to access this route.",
         401
       )
     );
-  const decoded = verifyToken(token);
+
+  let decoded;
+  try {
+    decoded = verifyToken(token);
+  } catch (error) {
+    return next(new apiError("Invalid or expired token", 401));
+  }
+
   const currentUser = await getUserById(decoded.userId);
-  //3) check if user exist
-  if (!currentUser) return next(new apiError("this user has no longer", 401));
+
+  if (!currentUser)
+    return next(new apiError("This user no longer exists", 401));
+
   if (hasPasswordChanged(currentUser, decoded))
     return next(
-      new apiError("User changed his Pasword .Please login agian", 401)
+      new apiError("User changed their password. Please log in again.", 401)
     );
-  req.user = currentUser;
+
+  req.user = currentUser; // Perfect approach
   next();
 });
 
-//1) check if token exist,if exsit  catched
+// 1) Check if token exists
 function getTokenFromHeaders(req) {
   const authorizationHeader = req.headers.authorization;
   if (authorizationHeader && authorizationHeader.startsWith("Bearer")) {
@@ -32,16 +42,24 @@ function getTokenFromHeaders(req) {
   }
   return null;
 }
-//2)Verifey token (no change happens,expired Token)
+
+// 2) Verify token
 function verifyToken(token) {
-  return jwt.verify(token, process.env.JWT_SECRET_KEY);
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET_KEY);
+  } catch (error) {
+    throw new Error("Invalid or expired token");
+  }
 }
+
+// 3) Get user by ID
 async function getUserById(userId) {
   return userModel.findById(userId);
 }
-//4) check if user change his password after token created
+
+// 4) Check if user changed their password after token creation
 function hasPasswordChanged(user, decodedToken) {
-  if (user.passwordchangedAt) {
+  if (user.passwordChangedAt) {
     const passChangedTimestamps = parseInt(
       user.passwordchangedAt.getTime() / 1000,
       10

@@ -13,7 +13,7 @@ const {
   updateSubcategories,
   setCategoryIdtobody,
   createFilterObj,
-} = require("../services/subCategorySerivce");
+} = require("../services/subCategoryService");
 const Authservices = require("../services/authService");
 
 const router = express.Router({ mergeParams: true });

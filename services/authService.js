@@ -4,16 +4,16 @@ const asyncHandler = require("express-async-handler");
 const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const sendEmail = require("../utils/sendEmial");
+const sendEmail = require("../utils/sendEmail");
 const { protectMiddlware } = require("../middleware/protectIMiddlware");
 const createToken = (payload) =>
   jwt.sign({ userId: payload }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRE_TIME,
   });
-// @desc Get SignUp
-// @route get /api/v1/auth/signup
+// @desc Post SignUp
+// @route post /api/v1/auth/signup
 // @acces public
-exports.signup = asyncHandler(async (req, res, next) => {
+exports.signup = asyncHandler(async (req, res) => {
   const user = await userModel.create({
     name: req.body.name,
     email: req.body.email,
@@ -22,8 +22,8 @@ exports.signup = asyncHandler(async (req, res, next) => {
   const token = createToken(user._id);
   res.status(201).json({ date: user, token });
 });
-// @desc Get login
-// @route get /api/v1/auth/login
+// @desc Post login
+// @route post /api/v1/auth/login
 // @acces public
 exports.login = asyncHandler(async (req, res, next) => {
   const user = await userModel.findOne({ email: req.body.email });
@@ -34,15 +34,15 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ date: user, token });
 });
-// make sure usr is logged in
+// make sure user is logged in
 exports.protect = protectMiddlware;
 // @desc ausorazition
 
 // ['admin',''manager]
 exports.allowTo = (...roles) =>
   asyncHandler(async (req, res, next) => {
-    //1)acces roles
-    //2) acces registerd user(req.user.role)
+    //1)access roles
+    //2) access registerd user(req.user.role)
     if (!roles.includes(req.user.role)) {
       return next(new apiError("You are Not Allowed to access this Route"));
     }
